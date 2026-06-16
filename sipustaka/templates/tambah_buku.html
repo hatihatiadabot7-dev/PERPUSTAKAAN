@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% if is_edit %}Edit Buku{% else %}Tambah Buku Baru{% endif %} - SIPUSTAKA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                50: "#eff6ff",
+                100: "#dbeafe",
+                200: "#bfdbfe",
+                300: "#93c5fd",
+                400: "#60a5fa",
+                500: "#3b82f6",
+                600: "#2563eb",
+                700: "#1d4ed8",
+                800: "#1e40af",
+                900: "#1e3a8a",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-slate-100 text-slate-900 h-screen overflow-hidden">
+    <div class="h-screen flex flex-col md:flex-row">
+      <aside class="w-full md:w-72 h-screen bg-slate-950 text-slate-100 flex-none flex flex-col">
+        <div class="px-6 py-7 border-b border-slate-800">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-500 to-sky-400 flex items-center justify-center shadow-lg">
+              <span class="text-xl font-bold text-white">P</span>
+            </div>
+            <div>
+              <p class="text-sm uppercase text-slate-400 tracking-[0.25em]">SIPUSTAKA</p>
+              <h1 class="text-xl font-semibold">Sistem Peminjaman Buku</h1>
+            </div>
+          </div>
+        </div>
+        <nav class="space-y-1 px-4 py-4 flex-1 overflow-y-auto">
+          <a href="/" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-slate-400 hover:bg-slate-900 hover:text-white transition"><span class="material-icons-outlined">dashboard</span> Dashboard</a>
+          <a href="/buku/" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-white bg-slate-900 shadow-inner"><span class="material-icons-outlined">book</span> Data Buku</a>
+          <a href="/users/" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-slate-400 hover:bg-slate-900 hover:text-white transition"><span class="material-icons-outlined">people</span> Data Siswa</a>
+          <a href="/peminjaman/" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-slate-400 hover:bg-slate-900 hover:text-white transition"
+            ><span class="material-icons-outlined">assignment</span> Peminjaman Buku</a
+          >
+        </nav>
+        <div class="mt-auto px-6 pb-6">
+          <div class="rounded-3xl bg-slate-900 p-5 shadow-xl shadow-slate-900/20">
+            <p class="text-sm text-slate-400">Admin Aktif</p>
+            <p class="mt-2 font-semibold text-white">Aisy Arkaan Abdurahman</p>
+          </div>
+        </div>
+      </aside>
+
+      <main class="flex-1 overflow-y-auto p-6 md:p-8 flex items-center justify-center">
+        <div class="w-full max-w-2xl bg-white rounded-3xl border border-slate-200 shadow-xl p-6 md:p-8">
+          <div class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
+            <a href="/buku/" class="w-10 h-10 rounded-xl border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-slate-50 transition">
+              <span class="material-icons-outlined">arrow_back</span>
+            </a>
+            <div>
+              <h1 class="text-2xl font-bold text-slate-900">{% if is_edit %}Edit Buku{% else %}Tambah Buku Baru{% endif %}</h1>
+              <p class="text-sm text-slate-500">{% if is_edit %}Ubah detail data buku yang tersimpan.{% else %}Masukkan data detail buku baru ke pustaka.{% endif %}</p>
+            </div>
+          </div>
+
+          <form method="POST" action="{% if is_edit %}/buku/edit/{{ buku.id }}/{% else %}/buku/tambah/{% endif %}" class="space-y-5">
+            {% csrf_token %}
+
+            <div>
+              <label class="block text-sm font-medium text-slate-700 mb-1">Judul Buku</label>
+              <input
+                type="text"
+                name="judul"
+                value="{{ buku.judul|default:'' }}"
+                required
+                placeholder="Contoh: Laskar Pelangi"
+                class="w-full px-4 py-2.5 rounded-xl border border-slate-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition"
+              />
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-slate-700 mb-1">Pengarang</label>
+                <input
+                  type="text"
+                  name="pengarang"
+                  value="{{ buku.pengarang|default:'' }}"
+                  required
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-slate-700 mb-1">Penerbit</label>
+                <input
+                  type="text"
+                  name="penerbit"
+                  value="{{ buku.penerbit|default:'' }}"
+                  required
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition"
+                />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-slate-700 mb-1">Kategori</label>
+                <input
+                  type="text"
+                  name="kategori"
+                  value="{{ buku.kategori|default:'' }}"
+                  required
+                  placeholder="Novel"
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-slate-700 mb-1">Tahun Terbit</label>
+                <input
+                  type="number"
+                  name="tahun_terbit"
+                  value="{{ buku.tahun_terbit|default:'' }}"
+                  required
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-slate-700 mb-1">Stok</label>
+                <input type="number" name="stok" value="{{ buku.stok|default:'' }}" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-slate-700 mb-1">Lokasi Rak</label>
+                <input
+                  type="text"
+                  name="rak"
+                  value="{{ buku.rak|default:'Rak Utama' }}"
+                  required
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-slate-700 mb-1">Deskripsi Ringkas</label>
+                <textarea name="deskripsi" rows="3" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition">
+{% if buku.deskripsi %}{{ buku.deskripsi }}{% endif %}</textarea
+                >
+              </div>
+            </div>
+
+            <div class="flex justify-end gap-3 pt-4 border-t border-slate-100">
+              <a href="/buku/" class="px-5 py-2.5 rounded-xl border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition">Batal</a>
+              <button type="submit" class="px-5 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 shadow-md">{% if is_edit %}Simpan Perubahan{% else %}Simpan Buku{% endif %}</button>
+            </div>
+          </form>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

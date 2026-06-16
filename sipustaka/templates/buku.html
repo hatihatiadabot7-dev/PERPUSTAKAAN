@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daftar Buku - SIPUSTAKA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                50: "#eff6ff",
+                100: "#dbeafe",
+                200: "#bfdbfe",
+                300: "#93c5fd",
+                400: "#60a5fa",
+                500: "#3b82f6",
+                600: "#2563eb",
+                700: "#1d4ed8",
+                800: "#1e40af",
+                900: "#1e3a8a",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-slate-100 text-slate-900 h-screen overflow-hidden">
+    <div class="h-screen flex flex-col md:flex-row">
+      <aside class="w-full md:w-72 h-screen bg-slate-950 text-slate-100 flex-none flex flex-col">
+        <div class="px-6 py-7 border-b border-slate-800">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-brand-500 to-sky-400 flex items-center justify-center shadow-lg shadow-slate-900/25">
+              <span class="text-xl font-bold">P</span>
+            </div>
+            <div>
+              <p class="text-sm uppercase text-slate-400 tracking-[0.25em]">SIPUSTAKA</p>
+              <h1 class="text-xl font-semibold">Sistem Peminjaman Buku</h1>
+            </div>
+          </div>
+        </div>
+        <nav class="space-y-1 px-4 py-4 flex-1 overflow-y-auto">
+          <a href="/" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-slate-400 hover:bg-slate-900 hover:text-white transition"> <span class="material-icons-outlined">dashboard</span> Dashboard </a>
+          <a href="/buku/" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-white bg-slate-900 shadow-inner"> <span class="material-icons-outlined">book</span> Data Buku </a>
+          <a href="/users/" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-slate-400 hover:bg-slate-900 hover:text-white transition"> <span class="material-icons-outlined">people</span> Data Siswa </a>
+          <a href="/peminjaman/" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-slate-400 hover:bg-slate-900 hover:text-white transition">
+            <span class="material-icons-outlined">assignment</span> Peminjaman Buku
+          </a>
+        </nav>
+        <div class="mt-auto px-6 pb-6">
+          <div class="rounded-3xl bg-slate-900 p-5 shadow-xl shadow-slate-900/20">
+            <p class="text-sm text-slate-400">Admin Aktif</p>
+            <p class="mt-2 font-semibold text-white">Aisy Arkaan Abdurahman</p>
+          </div>
+        </div>
+      </aside>
+
+      <main class="flex-1 overflow-y-auto p-6 md:p-8">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+          <div>
+            <p class="text-lg text-slate-500">Kelola data buku SIPUSTAKA.</p>
+            <h1 class="text-2xl font-bold text-slate-900">Daftar Buku</h1>
+          </div>
+          <a href="/buku/tambah/" class="flex items-center gap-2 rounded-xl bg-brand-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md hover:bg-brand-700 transition">
+            <span class="material-icons-outlined text-sm">add</span> Tambah Buku
+          </a>
+        </div>
+
+        <div class="bg-white rounded-3xl border border-slate-200 shadow-xl shadow-slate-100/40 overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left">
+              <thead>
+                <tr class="border-b border-slate-200 bg-slate-50/75 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                  <th class="px-4 py-3">ID</th>
+                  <th class="px-4 py-3">Judul</th>
+                  <th class="px-4 py-3">Pengarang</th>
+                  <th class="px-4 py-3">Kategori</th>
+                  <th class="px-4 py-3">Penerbit</th>
+                  <th class="px-4 py-3">Tahun</th>
+                  <th class="px-4 py-3">Rak</th>
+                  <th class="px-4 py-3">Stok</th>
+                  <th class="px-4 py-3 text-center">Aksi</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                {% for buku in daftar_buku %}
+                <tr class="hover:bg-slate-50/75 transition text-sm text-slate-600">
+                  <td class="px-4 py-3 font-medium text-slate-400">{{ buku.id }}</td>
+                  <td class="px-4 py-3 font-semibold text-slate-900">{{ buku.judul }}</td>
+                  <td class="px-4 py-3">{{ buku.pengarang }}</td>
+                  <td class="px-4 py-3"><span class="px-2.5 py-1 rounded-full bg-slate-100 text-xs text-slate-700 font-medium">{{ buku.kategori }}</span></td>
+                  <td class="px-4 py-3">{{ buku.penerbit }}</td>
+                  <td class="px-4 py-3">{{ buku.tahun_terbit }}</td>
+                  <td class="px-4 py-3 text-brand-600 font-medium">{{ buku.rak }}</td>
+                  <td class="px-4 py-3 font-medium">{{ buku.stok }}</td>
+                  <td class="px-4 py-3">
+                    <div class="flex items-center justify-center gap-2">
+                      <a href="/buku/detail/{{ buku.id }}/" class="px-3 py-1.5 rounded-xl text-xs font-medium text-slate-600 bg-slate-50 hover:bg-slate-100 transition">Detail</a>
+                      <a href="/buku/edit/{{ buku.id }}/" class="px-3 py-1.5 rounded-xl text-xs font-medium bg-brand-50 text-brand-600 hover:bg-brand-100 transition">Edit</a>
+                      <a href="/buku/hapus/{{ buku.id }}/" class="px-3 py-1.5 rounded-xl text-xs font-medium bg-red-50 text-red-600 hover:bg-red-100 transition">Hapus</a>
+                    </div>
+                  </td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="9" class="px-6 py-10 text-center text-slate-400">
+                    <span class="material-icons-outlined text-4xl block mb-2">inventory_2</span>
+                    Belum ada data buku di dalam database perpus_db.
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
