@@ -98,7 +98,7 @@ def edit_siswa(request, id):
             res = dictfetchall(cursor)
             siswa = res[0] if res else None
             return render(request, 'edit_user.html', {'siswa': siswa, 'is_edit': True})
-
+        
 def detail_siswa(request, id):
     with connection.cursor() as cursor:
         # Ambil data profil siswa berdasarkan ID (pastiin casting integer aman)
