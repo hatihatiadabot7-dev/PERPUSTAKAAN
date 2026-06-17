@@ -37,9 +37,9 @@
       }
     </style>
   </head>
-  <body class="bg-slate-100 text-slate-900 h-screen overflow-hidden">
-    <div class="h-screen flex flex-col md:flex-row">
-      <aside class="w-full md:w-72 h-screen bg-slate-950 text-slate-100 flex-none flex flex-col">
+  <body class="bg-slate-100 text-slate-900 min-h-screen md:h-screen overflow-x-hidden">
+    <div class="min-h-screen md:h-screen flex flex-col md:flex-row">
+      <aside class="w-full md:w-72 md:h-screen bg-slate-950 text-slate-100 flex-none flex flex-col">
         <div class="px-6 py-7 border-b border-slate-800">
           <div class="flex items-center gap-3">
             <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-500 to-sky-400 flex items-center justify-center shadow-lg">
@@ -65,9 +65,9 @@
         </div>
       </aside>
 
-      <main class="flex-1 overflow-y-auto p-6 md:p-8 flex items-center justify-center">
-        <div class="w-full max-w-2xl bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-slate-200">
-          <div class="flex items-center gap-4 mb-8">
+      <main class="flex-1 overflow-y-auto p-4 md:p-8 flex items-start md:items-center justify-center">
+        <div class="flex-1 overflow-y-auto p-4 md:p-8 flex items-start md:items-center justify-center">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-8">
             <a href="/peminjaman/" class="w-10 h-10 rounded-xl border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 transition">
               <span class="material-icons-outlined text-xl">arrow_back</span>
             </a>
@@ -121,9 +121,9 @@
               <input type="text" name="keperluan" value="Membaca Mandiri" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition" />
             </div>
 
-            <div class="flex justify-end gap-3 pt-4 border-t border-slate-100">
-              <a href="/peminjaman/" class="px-5 py-2.5 rounded-xl border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition"> Batal </a>
-              <button type="submit" class="px-5 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 shadow-md shadow-blue-500/10 transition">Simpan Transaksi</button>
+            <div class="flex flex-col-reverse sm:flex-row justify-end gap-3 pt-4 border-t border-slate-100">
+              <a href="/peminjaman/" class="w-full sm:w-auto text-center px-5 py-2.5 rounded-xl border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition"> Batal </a>
+              <button type="submit" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 shadow-md shadow-blue-500/10 transition">Simpan Transaksi</button>
             </div>
           </form>
         </div>

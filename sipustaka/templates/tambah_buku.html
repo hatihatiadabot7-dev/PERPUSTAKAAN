@@ -35,9 +35,9 @@
       }
     </style>
   </head>
-  <body class="bg-slate-100 text-slate-900 h-screen overflow-hidden">
-    <div class="h-screen flex flex-col md:flex-row">
-      <aside class="w-full md:w-72 h-screen bg-slate-950 text-slate-100 flex-none flex flex-col">
+  <body class="bg-slate-100 text-slate-900 min-h-screen md:h-screen overflow-x-hidden">
+    <div class="min-h-screen md:h-screen flex flex-col md:flex-row">
+      <aside class="w-full md:w-72 md:h-screen bg-slate-950 text-slate-100 flex-none flex flex-col">
         <div class="px-6 py-7 border-b border-slate-800">
           <div class="flex items-center gap-3">
             <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-500 to-sky-400 flex items-center justify-center shadow-lg">
@@ -65,8 +65,8 @@
         </div>
       </aside>
 
-      <main class="flex-1 overflow-y-auto p-6 md:p-8 flex items-center justify-center">
-        <div class="w-full max-w-2xl bg-white rounded-3xl border border-slate-200 shadow-xl p-6 md:p-8">
+      <main class="flex-1 overflow-y-auto p-4 md:p-8 flex items-start md:items-center justify-center">
+        <div class="w-full max-w-2xl bg-white rounded-3xl border border-slate-200 shadow-xl p-4 sm:p-6 md:p-8">
           <div class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
             <a href="/buku/" class="w-10 h-10 rounded-xl border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-slate-50 transition">
               <span class="material-icons-outlined">arrow_back</span>
@@ -92,7 +92,7 @@
               />
             </div>
 
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label class="block text-sm font-medium text-slate-700 mb-1">Pengarang</label>
                 <input
@@ -115,7 +115,7 @@
               </div>
             </div>
 
-            <div class="grid grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <label class="block text-sm font-medium text-slate-700 mb-1">Kategori</label>
                 <input
@@ -162,9 +162,9 @@
               </div>
             </div>
 
-            <div class="flex justify-end gap-3 pt-4 border-t border-slate-100">
+            <div class="flex flex-col-reverse sm:flex-row justify-end gap-3 pt-4 border-t border-slate-100">
               <a href="/buku/" class="px-5 py-2.5 rounded-xl border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition">Batal</a>
-              <button type="submit" class="px-5 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 shadow-md">{% if is_edit %}Simpan Perubahan{% else %}Simpan Buku{% endif %}</button>
+              <button type="submit" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 shadow-md">{% if is_edit %}Simpan Perubahan{% else %}Simpan Buku{% endif %}</button>
             </div>
           </form>
         </div>
