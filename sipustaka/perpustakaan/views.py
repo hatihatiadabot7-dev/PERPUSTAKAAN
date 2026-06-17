@@ -97,7 +97,7 @@ def edit_siswa(request, id):
             cursor.execute("SELECT * FROM perpustakaan_siswa WHERE id = %s", [id])
             res = dictfetchall(cursor)
             siswa = res[0] if res else None
-            return render(request, 'add-user.html', {'siswa': siswa, 'is_edit': True})
+            return render(request, 'edit_user.html', {'siswa': siswa, 'is_edit': True})
 
 def detail_siswa(request, id):
     with connection.cursor() as cursor:
