@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Peminjaman Buku - SIPUSTAKA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                50: "#eff6ff",
+                100: "#dbeafe",
+                200: "#bfdbfe",
+                300: "#93c5fd",
+                400: "#60a5fa",
+                500: "#3b82f6",
+                600: "#2563eb",
+                700: "#1d4ed8",
+                800: "#1e40af",
+                900: "#1e3a8a",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-slate-100 text-slate-900 min-h-screen md:h-screen overflow-x-hidden">
+    <div class="min-h-screen md:h-screen flex flex-col md:flex-row">
+      <aside class="w-full md:w-72 md:h-screen bg-slate-950 text-slate-100 flex-none flex flex-col">
+        <div class="px-6 py-7 border-b border-slate-800">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-brand-500 to-sky-400 flex items-center justify-center shadow-lg shadow-slate-900/25">
+              <span class="text-xl font-bold text-white">P</span>
+            </div>
+            <div>
+              <p class="text-sm uppercase text-slate-400 tracking-[0.25em]">SIPUSTAKA</p>
+              <h1 class="text-xl font-semibold">Sistem Peminjaman Buku</h1>
+            </div>
+          </div>
+        </div>
+        <nav class="space-y-1 px-4 py-4 flex-1 overflow-y-auto">
+          <a href="/" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-slate-400 hover:bg-slate-900 hover:text-white transition"> <span class="material-icons-outlined">dashboard</span> Dashboard </a>
+          <a href="/buku/" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-slate-400 hover:bg-slate-900 hover:text-white transition"> <span class="material-icons-outlined">book</span> Data Buku </a>
+          <a href="/users/" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-slate-400 hover:bg-slate-900 hover:text-white transition"> <span class="material-icons-outlined">people</span> Data Siswa </a>
+          <a href="/peminjaman/" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-white bg-slate-900 shadow-inner"> <span class="material-icons-outlined">assignment</span> Peminjaman Buku </a>
+        </nav>
+        <div class="mt-auto px-6 pb-6">
+          <div class="rounded-3xl bg-slate-900 p-5 shadow-xl shadow-slate-900/20">
+            <p class="text-sm text-slate-400">Admin Aktif</p>
+            <p class="mt-2 font-semibold text-white">Aisy Arkaan Abdurahman</p>
+          </div>
+        </div>
+      </aside>
+
+      <main class="flex-1 overflow-y-auto p-6 md:p-8">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-6">
+          <div>
+            <h1 class="text-2xl font-bold text-slate-900">Peminjaman Buku</h1>
+            <p class="text-sm text-slate-500 mt-1">Kelola data transaksi peminjaman buku perpustakaan.</p>
+          </div>
+          <a href="/peminjaman/tambah/" class="flex w-full sm:w-auto justify-center items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md hover:bg-blue-700 transition">
+            <span class="material-icons-outlined text-sm">add</span> Tambah Peminjaman
+          </a>
+        </div>
+
+        <div class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl shadow-slate-100">
+          <div class="overflow-x-auto">
+            <table class="min-w-[900px] w-full border-collapse text-left text-sm text-slate-500">
+              <thead class="bg-slate-50 text-xs font-semibold uppercase text-slate-700 border-b border-slate-200">
+                <tr>
+                  <th class="px-4 py-4 w-12 text-center">No</th>
+                  <th class="px-4 py-4 w-3/12">Nama Siswa</th>
+                  <th class="px-4 py-4 w-3/12">Judul Buku</th>
+                  <th class="px-4 py-4 w-2/12">Keperluan</th>
+                  <th class="px-4 py-4 w-32 text-center">Tgl Pinjam</th>
+                  <th class="px-4 py-4 w-32 text-center">Jatuh Tempo</th>
+                  <th class="px-4 py-4 w-28 text-center">Status</th>
+                  <th class="px-4 py-4 w-36 text-center">Aksi</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 bg-white">
+                {% for pinjam in peminjaman %}
+                <tr class="hover:bg-slate-50 transition">
+                  <td class="px-4 py-4 text-sm font-medium text-slate-900 text-center">{{ forloop.counter }}</td>
+                  <td class="px-4 py-4 text-sm text-slate-800 font-semibold whitespace-normal break-words">{{ pinjam.nama_siswa }}</td>
+                  <td class="px-4 py-4 text-sm text-slate-700 whitespace-normal break-words">{{ pinjam.judul_buku }}</td>
+                  <td class="px-4 py-4 text-sm text-slate-600 whitespace-normal break-words">{{ pinjam.keperluan }}</td>
+                  <td class="px-4 py-4 text-sm text-slate-600 text-center whitespace-normal">{{ pinjam.tanggal_pinjam }}</td>
+                  <td class="px-4 py-4 text-sm text-slate-600 text-center whitespace-normal">{{ pinjam.jatuh_tempo }}</td>
+                  <td class="px-4 py-4 text-sm text-center whitespace-nowrap">
+                    {% if pinjam.status == 'Dipinjam' %}
+                    <span class="inline-flex items-center rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-800">Dipinjam</span>
+                    {% else %}
+                    <span class="inline-flex items-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-medium text-emerald-800">Kembali</span>
+                    {% endif %}
+                  </td>
+                  <td class="px-4 py-4 text-sm text-center">
+                    {% if pinjam.status == 'Dipinjam' %}
+                    <form action="/peminjaman/kembalikan/{{ pinjam.id }}/" method="POST" class="inline" onclick="return confirm('Proses pengembalian buku ini?');">
+                      {% csrf_token %}
+                      <button type="submit" class="inline-block px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-emerald-50 text-emerald-600 hover:bg-emerald-100 transition whitespace-nowrap">Kembalikan</button>
+                    </form>
+                    {% else %}
+                    <span class="text-xs text-slate-400 font-medium">- Selesai -</span>
+                    {% endif %}
+                  </td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="8" class="px-4 py-10 text-center text-slate-400">
+                    <span class="material-icons-outlined text-4xl block mb-2">assignment_turned_in</span>
+                    Belum ada transaksi peminjaman buku.
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

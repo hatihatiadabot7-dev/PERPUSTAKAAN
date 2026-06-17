@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detail Buku - Sistem Peminjaman Buku SIPUSTAKA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                50: "#eff6ff",
+                100: "#dbeafe",
+                200: "#bfdbfe",
+                300: "#93c5fd",
+                400: "#60a5fa",
+                500: "#3b82f6",
+                600: "#2563eb",
+                700: "#1d4ed8",
+                800: "#1e40af",
+                900: "#1e3a8a",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family:
+          Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-slate-100 text-slate-900 min-h-screen">
+    <div class="min-h-screen flex flex-col md:flex-row">
+      <aside class="w-full md:w-72 md:h-screen bg-slate-950 text-slate-100 flex-none flex flex-col">
+        <div class="px-6 py-7 border-b border-slate-800">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-brand-500 to-sky-400 flex items-center justify-center shadow-lg shadow-slate-900/25">
+              <span class="text-xl font-bold">P</span>
+            </div>
+            <div>
+              <p class="text-sm uppercase text-slate-400 tracking-[0.25em]">SIPUSTAKA</p>
+              <h1 class="text-xl font-semibold">Sistem Peminjaman Buku</h1>
+            </div>
+          </div>
+        </div>
+        <nav class="space-y-1 px-4 py-4 flex-1 overflow-y-auto">
+          <a href="/" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-slate-400 hover:bg-slate-900 hover:text-white transition"> <span class="material-icons-outlined">dashboard</span> Dashboard </a>
+          <a href="/buku/" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-white bg-slate-900 shadow-inner"> <span class="material-icons-outlined">book</span> Data Buku </a>
+          <a href="/users/" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-slate-400 hover:bg-slate-900 hover:text-white transition"> <span class="material-icons-outlined">people</span> Data Siswa </a>
+          <a href="/peminjaman/" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-slate-400 hover:bg-slate-900 hover:text-white transition">
+            <span class="material-icons-outlined">assignment</span> Peminjaman Buku
+          </a>
+        </nav>
+        <div class="mt-auto px-6 pb-6">
+          <div class="rounded-3xl bg-slate-900 p-5 shadow-xl shadow-slate-900/20">
+            <p class="text-sm text-slate-400">Admin Aktif</p>
+            <p class="mt-2 font-semibold text-white">Aisy Arkaan Abdurahman</p>
+          </div>
+        </div>
+      </aside>
+
+      <main class="flex-1 overflow-y-auto p-6 md:p-8">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+          <div>
+            <p class="text-slate-500 text-sm">Kelola Buku / Detail</p>
+            <h3 class="text-2xl font-semibold text-slate-900">Detail Informasi Buku</h3>
+          </div>
+          <a href="/buku/" class="w-full sm:w-auto flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50 transition">
+            <span class="material-icons-outlined text-sm">arrow_back</span> Kembali ke Daftar
+          </a>
+        </div>
+
+        {% if buku %}
+        <div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 md:p-8 max-w-4xl">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+            <div class="flex flex-col">
+              <span class="text-xs font-bold text-slate-400 tracking-wider uppercase">Judul Buku</span>
+              <h4 class="text-2xl font-bold text-slate-900 mt-1">{{ buku.judul }}</h4>
+            </div>
+
+            <div class="flex flex-col">
+              <span class="text-xs font-bold text-slate-400 tracking-wider uppercase">Penerbit (Tahun)</span>
+              <h4 class="text-lg font-semibold text-slate-800 mt-1">{{ buku.penerbit }} ({{ buku.year_terbit|default:buku.year_terbit }})</h4>
+            </div>
+
+            <div class="flex flex-col">
+              <span class="text-xs font-bold text-slate-400 tracking-wider uppercase">Pengarang</span>
+              <h4 class="text-lg font-medium text-slate-800 mt-1">{{ buku.pengarang }}</h4>
+            </div>
+
+            <div class="flex flex-col">
+              <span class="text-xs font-bold text-slate-400 tracking-wider uppercase">Lokasi Rak</span>
+              <h4 class="text-lg font-medium text-slate-800 mt-1">{{ buku.rak }}</h4>
+            </div>
+
+            <div class="flex flex-col">
+              <span class="text-xs font-bold text-slate-400 tracking-wider uppercase">Kategori</span>
+              <div class="mt-1">
+                <span class="inline-flex items-center rounded-md bg-slate-100 px-2.5 py-1 text-sm font-medium text-slate-800 border border-slate-200"> {{ buku.kategori }} </span>
+              </div>
+            </div>
+
+            <div class="flex flex-col">
+              <span class="text-xs font-bold text-slate-400 tracking-wider uppercase">Sisa Stok</span>
+              <div class="mt-1">
+                {% if buku.stok > 0 %}
+                <h4 class="text-xl font-bold">{{ buku.stok }}</h4>
+                {% else %}
+                <span class="inline-flex items-center rounded-full bg-rose-50 px-3 py-1 text-xs font-semibold text-rose-700 border border-rose-200">Stok Habis</span>
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="flex flex-col md:col-span-2 border-t border-slate-100 pt-5 mt-2">
+              <span class="text-xs font-bold text-slate-400 tracking-wider uppercase">Deskripsi Buku</span>
+              <p class="text-slate-600 mt-2 leading-relaxed whitespace-pre-line">{{ buku.deskripsi|default:"Tidak ada deskripsi tambahan untuk buku ini." }}</p>
+            </div>
+          </div>
+        </div>
+        {% else %}
+        <div class="bg-white rounded-2xl p-10 text-center border border-slate-200 max-w-md shadow-sm">
+          <span class="material-icons-outlined text-4xl text-slate-300 block mb-2">error_outline</span>
+          <p class="text-slate-600 font-medium">Data buku tidak ditemukan atau ID salah.</p>
+        </div>
+        {% endif %}
+      </main>
+    </div>
+  </body>
+</html>
