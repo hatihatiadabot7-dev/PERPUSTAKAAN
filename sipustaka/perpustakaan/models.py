@@ -1,11 +1,9 @@
-from django.db import models
+from django.db import models  # <-- Pastikan baris ini ada di paling atas!
 
-class Buku(models.Model):
-    # Contoh kolom/field (sesuaikan dengan proyek kamu):
-    judul = models.CharField(max_length=200)
-    penulis = models.CharField(max_length=100)
-    
-    # Jika kamu menggunakan Raw SQL manual, kamu bisa mengunci nama tabelnya di sini:
+class Siswa(models.Model):
+    nis = models.CharField(max_length=20, unique=True)
+    nama = models.CharField(max_length=100)
+    kelas = models.CharField(max_length=50)
+
     class Meta:
-        db_table = 'perpustakaan_buku'
-        
+        db_table = 'perpustakaan_siswa'
