@@ -8,3 +8,4 @@ class Buku(models.Model):
     # Jika kamu menggunakan Raw SQL manual, kamu bisa mengunci nama tabelnya di sini:
     class Meta:
         db_table = 'perpustakaan_buku'
+        
