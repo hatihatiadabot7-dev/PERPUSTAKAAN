@@ -190,7 +190,7 @@ def edit_buku(request, id):
             deskripsi = request.POST.get('deskripsi')
             cursor.execute("""
                 UPDATE perpustakaan_buku
-                SET judul=%s, pengarang=%s, kategori=%s, penerbit=%s, tahun_terbit=%s, rak=%s, stok=%s, deskripsi=%s
+                SET judul=%s, pengarang=%s, kategori=%s, penerbit=%s, year_terbit=%s, rak=%s, stok=%s, deskripsi=%s
                 WHERE id=%s
             """, [judul, pengarang, kategori, penerbit, tahun_terbit, rak, stok, deskripsi, id])
             return redirect('list_buku')

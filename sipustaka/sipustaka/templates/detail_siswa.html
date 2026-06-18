@@ -42,8 +42,8 @@
       <aside class="w-full md:w-72 md:h-screen bg-slate-950 text-slate-100 flex-none flex flex-col">
         <div class="px-6 py-7 border-b border-slate-800">
           <div class="flex items-center gap-3">
-            <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-brand-500 to-sky-400 flex items-center justify-center shadow-lg shadow-slate-900/25">
-              <span class="text-xl font-bold">P</span>
+            <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-500 to-sky-400 flex items-center justify-center shadow-lg">
+              <span class="text-xl font-bold text-white">P</span>
             </div>
             <div>
               <p class="text-sm uppercase text-slate-400 tracking-[0.25em]">SIPUSTAKA</p>
@@ -81,12 +81,12 @@
         {% if siswa %}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-6xl">
           <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
-            <span class="text-xs font-bold text-slate-400 tracking-wider uppercase">ID</span>
+            <span class="text-xs font-bold text-slate-400 tracking-wider uppercase">ID SISWA</span>
             <h4 class="text-xl font-bold text-slate-800 mt-2">{{ siswa.id }}</h4>
           </div>
 
           <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
-            <span class="text-xs font-bold text-slate-400 tracking-wider uppercase">Nama</span>
+            <span class="text-xs font-bold text-slate-400 tracking-wider uppercase">Nama Lengkap</span>
             <h4 class="text-xl font-bold text-slate-800 mt-2">{{ siswa.nama }}</h4>
           </div>
 
@@ -101,7 +101,7 @@
           </div>
 
           <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
-            <span class="text-xs font-bold text-slate-400 tracking-wider uppercase">Status</span>
+            <span class="text-xs font-bold text-slate-400 tracking-wider uppercase">Status Akun</span>
             <div class="mt-2">
               {% if siswa.is_active %}
               <span class="inline-flex items-center rounded-full bg-emerald-50 border border-emerald-200 px-3 py-1 text-xs font-semibold text-emerald-700">Aktif</span>
@@ -112,18 +112,26 @@
           </div>
 
           <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
-            <span class="text-xs font-bold text-slate-400 tracking-wider uppercase">Total Peminjaman</span>
+            <span class="text-xs font-bold text-slate-400 tracking-wider uppercase">Total Riwayat Pinjam</span>
             <h4 class="text-xl font-bold text-slate-800 mt-2">{{ total_peminjaman }} Kali</h4>
           </div>
 
           <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm md:col-span-2 lg:col-span-3 mt-2">
-            <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center justify-between mb-3">
               <span class="text-xs font-bold text-slate-400 tracking-wider uppercase">Peminjaman Aktif Saat Ini</span>
-              <span class="text-sm font-semibold text-brand-600">{{ total_peminjaman_aktif }} Buku Sedang Dipinjam</span>
+              <span class="text-sm font-semibold text-blue-600">{{ total_peminjaman_aktif }} Buku Sedang Dipinjam</span>
             </div>
 
-            <div class="text-brand-600 font-bold">{{ persen_aktif|default:0 }}</div>
-            <p class="text-xs text-slate-400 mt-2">Batas maksimal peminjaman simultan ideal adalah 5 buku.</p>
+            <div class="mt-2 text-sm text-slate-500 flex items-center gap-1.5">
+              <span class="font-bold text-slate-800 text-base">{{ total_peminjaman_aktif }}</span>
+              <span>/</span>
+              <span class="text-slate-400">5 Buku dikuasai</span>
+            </div>
+
+            <div class="flex justify-between items-center mt-2">
+              <p class="text-xs text-slate-400">Batas maksimal peminjaman simultan ideal adalah 5 buku.</p>
+              <span class="text-xs font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">{{ persen_aktif|default:0 }}% Kapasitas</span>
+            </div>
           </div>
         </div>
 
