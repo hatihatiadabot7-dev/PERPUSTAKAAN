@@ -74,7 +74,7 @@ WSGI_APPLICATION = 'sipustaka.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/home/aisyarkaanabdurrahman/PERPUSTAKAAN/sipustaka/db.sqlite3',
+        'NAME': '/home/aisyarkaanabdurrahman/PERPUSTAKAAN/PERPUSTAKAAN/sipustaka/db.sqlite3',
     }
 }
 

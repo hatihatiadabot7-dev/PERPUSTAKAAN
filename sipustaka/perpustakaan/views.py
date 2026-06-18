@@ -47,6 +47,7 @@ def dashboard(request):
         'total_siswa': total_siswa,
         'total_dipinjam': total_dipinjam,
         'total_dikembalikan': total_dikembalikan,
+        'total_transaksi': total_transaksi, # KOREKSI: Ditambahkan agar terbaca di index.html
         'daftar_buku_dashboard': daftar_buku_dashboard,
         'persen_dipinjam': persen_dipinjam,
         'persen_dikembalikan': persen_dikembalikan,
@@ -101,12 +102,10 @@ def edit_siswa(request, id):
         
 def detail_siswa(request, id):
     with connection.cursor() as cursor:
-        # Ambil data profil siswa berdasarkan ID (pastiin casting integer aman)
         cursor.execute("SELECT * FROM perpustakaan_siswa WHERE id = %s", [int(id)])
         res = dictfetchall(cursor)
         siswa = res[0] if res else None
         
-        # Inisialisasi variabel default
         total_peminjaman = 0
         total_peminjaman_aktif = 0
         persen_aktif = 0
@@ -114,11 +113,9 @@ def detail_siswa(request, id):
         if siswa:
             siswa_id_real = siswa['id']
             
-            # Hitung total semua transaksi peminjaman milik siswa ini
             cursor.execute("SELECT COUNT(*) FROM perpustakaan_peminjaman WHERE siswa_id = %s", [siswa_id_real])
             total_peminjaman = cursor.fetchone()[0] or 0
             
-            # Hitung peminjaman aktif menggunakan LOWER() agar kebal dari variasi 'Dipinjam' / 'dipinjam'
             cursor.execute("""
                 SELECT COUNT(*) 
                 FROM perpustakaan_peminjaman 
@@ -126,7 +123,6 @@ def detail_siswa(request, id):
             """, [siswa_id_real])
             total_peminjaman_aktif = cursor.fetchone()[0] or 0
             
-            # Kalkulasi persentase untuk progress bar (Batas ideal 5 buku)
             max_pinjam_ideal = 5
             persen_aktif = min(100, int((total_peminjaman_aktif / max_pinjam_ideal) * 100)) if total_peminjaman_aktif > 0 else 0
 
@@ -165,7 +161,13 @@ def tambah_buku(request):
         pengarang = request.POST.get('pengarang')
         kategori = request.POST.get('kategori')
         penerbit = request.POST.get('penerbit')
-        tahun_terbit = request.POST.get('tahun_terbit')
+        
+        # KOREKSI: Casting ke integer aman untuk menghindari mismatch tipe data di DB
+        try:
+            tahun_terbit = int(request.POST.get('tahun_terbit', 2026))
+        except (ValueError, TypeError):
+            tahun_terbit = 2026
+            
         rak = request.POST.get('rak')
         stok = int(request.POST.get('stok', 0))
         deskripsi = request.POST.get('deskripsi')
@@ -184,7 +186,13 @@ def edit_buku(request, id):
             pengarang = request.POST.get('pengarang')
             kategori = request.POST.get('kategori')
             penerbit = request.POST.get('penerbit')
-            tahun_terbit = request.POST.get('tahun_terbit')
+            
+            # KOREKSI: Casting ke integer aman
+            try:
+                tahun_terbit = int(request.POST.get('tahun_terbit', 2026))
+            except (ValueError, TypeError):
+                tahun_terbit = 2026
+                
             rak = request.POST.get('rak')
             stok = int(request.POST.get('stok', 0))
             deskripsi = request.POST.get('deskripsi')
@@ -202,7 +210,6 @@ def edit_buku(request, id):
 
 def detail_buku(request, id):
     with connection.cursor() as cursor:
-        # Gunakan int(id) agar tipe data parameter ke SQL mentah selalu berupa integer
         cursor.execute("SELECT * FROM perpustakaan_buku WHERE id = %s", [int(id)])
         res = dictfetchall(cursor)
         buku = res[0] if res else None
@@ -271,14 +278,12 @@ def tambah_peminjaman(request):
                     'siswa_list': siswa_list, 'buku_list': buku_list, 'error': error_msg
                 })
 
-            # Eksekusi simpan transaksi pinjam
             cursor.execute("""
                 INSERT INTO perpustakaan_peminjaman
                 (siswa_id, buku_id, tanggal_pinjam, jatuh_tempo, keperluan, status)
                 VALUES (%s, %s, %s, %s, %s, %s)
             """, [siswa_id, buku_id, tanggal_pinjam, jatuh_tempo, keperluan, status])
             
-            # Pengurangan stok otomatis dijalankan di sini
             cursor.execute("""
                 UPDATE perpustakaan_buku
                 SET stok = stok - 1
